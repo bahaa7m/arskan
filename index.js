@@ -1,9 +1,11 @@
 const express = require('express')
 const axios = require('axios')
+var cors = require('cors')
 const app = express()
 const port = 3030
 
-app.use(express.static('vue_project/arskan/dist'))
+app.use(cors())
+// app.use(express.static('vue_project/arskan/dist'))
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
