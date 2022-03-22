@@ -1,10 +1,15 @@
+<script setup>
+  import Silo from "./silo.vue"
+</script>
+
 <template>
-    <p v-for="(e, i) in silos" :key="i">{{ e.name }}</p>
+    <Silo v-for="(e, i) in silos" :key="i" :silo="e"></Silo>
 </template>
 
 <script>
 export default {
   props: ['silos'],
+  components: [Silo],
   created() {
     console.log(this.silos)
   }
