@@ -1,23 +1,34 @@
 <script setup>
   import Silo from "./silo.vue"
+  import SiloViewer from './silo_viewer.vue'
 </script>
 
 <template>
-    <Silo v-for="(e, i) in silos" :key="i" :silo="e"></Silo>
+  <div class="list">
+    <!-- <Silo v-for="(e, i) in silos" :key="i" :silo="e"></Silo> -->
+    <SiloViewer :url="url"></SiloViewer>
+  </div>
 </template>
 
 <script>
 export default {
-  props: ['silos'],
-  components: [Silo],
-  created() {
-    console.log(this.silos)
-  }
+  data(){
+    return {
+      url: ""
+    }
+  },
+  props: ['silos', 'silos-embed-url'],
+  components: [Silo, SiloViewer],
 }
 </script>
 
 <style>
-    p{
-        color: whitesmoke;
-    }
+  p{
+      color: whitesmoke;
+  }
+
+  .list{
+    display: flex;
+    flex-wrap: wrap;
+  }
 </style>
