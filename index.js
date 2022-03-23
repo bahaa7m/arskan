@@ -66,3 +66,25 @@ app.post('/embed/:id', (req, res) => {
             res.send({ error: error })
         })
 })
+
+app.put('/update/:id', (req, res) => {
+    console.log(req.body)
+    console.log(req.params.id)
+
+    axios
+        .put(
+            "https://public-api.arskan.com/objects/" + req.params.id,
+            {
+                'name': req.body.name,
+                'description': req.body.description,
+            },
+            {
+                headers: { "Authorization": token },
+            })
+        .then(_res => {
+            res.send({ data: _res.data })
+        })
+        .catch(error => {
+            res.send({ error: error })
+        })
+})

@@ -2,13 +2,13 @@ import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 import App from './App.vue'
-import SiloList from './pages/silo_list.vue'
+import SiloPage from './pages/silo_page.vue'
 import ObjectInfo from './pages/object_infos.vue'
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        { path: '/', component: SiloList, },
+        { path: '/', component: SiloPage, },
         { path: '/object/:id', component: ObjectInfo, },
     ]
 })

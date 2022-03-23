@@ -13,7 +13,13 @@ import SiloObject from "../components/silo_object.vue"
 <script>
 export default {
     components: [SiloObject],
-    props: ["siloObjects"],
+    inject: ["siloObjects"],
+    watch:{
+        siloObjects(val,_){
+            console.log("silo objects")
+            console.log(val)
+        }
+    }
 }
 </script>
 
@@ -26,5 +32,7 @@ p {
 .list {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 </style>

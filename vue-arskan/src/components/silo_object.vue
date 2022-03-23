@@ -18,10 +18,18 @@ export default {
 
 
 <style scoped>
+.card{
+    height: 230px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
 .title {
     font-size: 1.2rem;
-    overflow-x: hidden;
-    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 300px;
 }
 
 .thumbnail {
@@ -42,10 +50,13 @@ export default {
     align-items: center;
     color: white;
     opacity: 0;
-    transition: all 50ms;
+    transition: all 150ms;
 }
 
 
+.thumbnail:hover{
+    box-shadow: 0 0 0 #000;
+}
 .thumbnail:hover .hover-info{
     opacity: 1;
 }

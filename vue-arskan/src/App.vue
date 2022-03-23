@@ -1,6 +1,6 @@
 <template>
     <h1>ARSKAN</h1>
-    <router-view :siloObjects="siloObjects"></router-view>
+    <router-view></router-view>
     <div class="loader-container" v-if="isLoading">
         <span class="loader"></span>
     </div>
@@ -19,7 +19,8 @@ export default {
     },
     provide() {
         return {
-            siloObjects: this.siloObjects
+            siloObjects: this.siloObjects,
+            updateObject: this.updateObject
         }
     },
     created() {
@@ -38,10 +39,8 @@ export default {
                     return response.json();
                 })
                 .then(data => {
-                    // console.log("data : ", data)
-                    this.siloObjects = data.data
+                    this.siloObjects.push(...data.data)
                     this.isLoading = false
-                    // this.fetchProfiles()
                 })
                 .catch(function (error) {
                     console.log("error : ", error)
@@ -106,8 +105,41 @@ export default {
                     });
             }
             // console.log(this.siloObjects)
+        },
+        updateObject(siloObject, nname, ndescription){
+            fetch("http://localhost:3030/update/" + siloObject._id, {
+                    method: "PUT",
+                    mode: 'cors',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        "name": nname != "" ? nname : siloObject.name,
+                        "description": ndescription != "" ? ndescription : siloObject.description,
+                    })
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error(response.error)
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            throw new Error(data.error.message)
+                        }
+                        // console.log("data : ", data)
+                        if(data.data === ""){
+                            const index = this.siloObjects.indexOf(siloObject)
+                            this.siloObjects[index].name = nname
+                            this.siloObjects[index].description = ndescription
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
         }
-    }
+    },
 }
 </script>
 
