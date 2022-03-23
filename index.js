@@ -44,7 +44,7 @@ app.get('/profiles', (req, res) => {
 
 })
 
-app.post('/silo/:id', (req, res) => {
+app.post('/embed/:id', (req, res) => {
     console.log(req.body)
     console.log(req.params.id)
 
