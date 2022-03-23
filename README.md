@@ -10,5 +10,5 @@ Dans le dossier root :
 
 ### Web app (vue.js)   
 
-> cd vue_project/arskan
+> cd vue-arskan/
 > npm run dev
