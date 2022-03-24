@@ -1,6 +1,7 @@
 <script setup>
 import ObjectViewer from '../components/object_viewer.vue'
 import ModifForm from '../components/modif_form.vue'
+import PointerList from '../components/pointers_list.vue'
 </script>
 
 
@@ -12,6 +13,8 @@ import ModifForm from '../components/modif_form.vue'
         <ObjectViewer :url="embedUrl" />
         <h2>Modification</h2>
         <ModifForm :editable="id === red_car_id" :silo-object="siloObject"/>
+        <h2>Pointeurs</h2>
+        <PointerList :pointers="pointers"/>
     </div>
 </template>
 
@@ -19,7 +22,7 @@ import ModifForm from '../components/modif_form.vue'
 <script>
 
 export default {
-    components: [ObjectViewer, ModifForm],
+    components: [ObjectViewer, ModifForm, PointerList],
     inject: ["siloObjects"],
     data() {
         return {
@@ -44,6 +47,9 @@ export default {
         },
         id() {
             return this.$route.params.id
+        },
+        pointers(){
+            return this.siloObject.pointers
         }
     }
 }

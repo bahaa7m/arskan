@@ -40,7 +40,8 @@ export default {
                 })
                 .then(data => {
                     this.siloObjects.push(...data.data)
-                    this.isLoading = false
+                    // this.isLoading = false
+                    this.fetchPointers()
                 })
                 .catch(function (error) {
                     console.log("error : ", error)
@@ -106,17 +107,45 @@ export default {
             }
             // console.log(this.siloObjects)
         },
-        updateObject(siloObject, nname, ndescription){
+        updateObject(siloObject, nname, ndescription) {
             fetch("http://localhost:3030/update/" + siloObject._id, {
-                    method: "PUT",
-                    mode: 'cors',
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        "name": nname != "" ? nname : siloObject.name,
-                        "description": ndescription != "" ? ndescription : siloObject.description,
-                    })
+                method: "PUT",
+                mode: 'cors',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    "name": nname != "" ? nname : siloObject.name,
+                    "description": ndescription != "" ? ndescription : siloObject.description,
+                })
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(response.error)
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        throw new Error(data.error.message)
+                    }
+                    // console.log("data : ", data)
+                    if (data.data === "") {
+                        const index = this.siloObjects.indexOf(siloObject)
+                        this.siloObjects[index].name = nname
+                        this.siloObjects[index].description = ndescription
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        fetchPointers() {
+            const n = this.siloObjects.length
+            for (const [i, o] of this.siloObjects.entries()) {
+
+                fetch("http://localhost:3030/pointers/" + o._id, {
+                    method: "GET",
                 })
                     .then((response) => {
                         if (!response.ok) {
@@ -125,19 +154,88 @@ export default {
                         return response.json();
                     })
                     .then(data => {
-                        if (data.error) {
-                            throw new Error(data.error.message)
-                        }
-                        // console.log("data : ", data)
-                        if(data.data === ""){
-                            const index = this.siloObjects.indexOf(siloObject)
-                            this.siloObjects[index].name = nname
-                            this.siloObjects[index].description = ndescription
+                        // console.log("data pointers : ", data)
+                        o["pointers"] = data.data
+                        if (i == n - 1) {
+                            this.isLoading = false
+                            console.log("updated objects : ", this.siloObjects)
                         }
                     })
                     .catch(function (error) {
-                        console.log(error)
+                        console.log("error : ", error)
                     });
+            }
+        },
+        addPointer(objectId, pointer) {
+            fetch("http://localhost:3030/pointers/add/" + objectId, {
+                method: "POST",
+                mode: 'cors',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(pointer)
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(response.error)
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        throw new Error(data.error.message)
+                    }
+                    console.log(data)
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        updatePointer(id, pointer) {
+            fetch("http://localhost:3030/pointers/update/" + id, {
+                method: "PUT",
+                mode: 'cors',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(pointer)
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(response.error)
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        throw new Error(data.error.message)
+                    }
+                    console.log(data)
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        deletePointer(id) {
+            fetch("http://localhost:3030/pointers/delete/" + id, {
+                method: "DELETE",
+                mode: 'cors',
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(response.error)
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        throw new Error(data.error.message)
+                    }
+                    console.log(data)
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
         }
     },
 }
