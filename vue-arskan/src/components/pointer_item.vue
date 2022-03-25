@@ -46,11 +46,11 @@
         </div>
 
         <form @submit.prevent>
-            <input class="title" placeholder="title" :disabled="!isEditing" v-model="mTitle" />
+            <input class="title" placeholder="title" :disabled="!isEditable" v-model="mTitle" />
             <input
                 class="description"
                 placeholder="description"
-                :disabled="!isEditing"
+                :disabled="!isEditable"
                 v-model="mDescription"
             />
 
@@ -63,7 +63,7 @@
                             class="pos-value"
                             type="number"
                             v-for="(v, i) in pointer.camera.position"
-                            :disabled="!isEditing"
+                            :disabled="!isEditable"
                             v-model="mCamPos[i]"
                         />
                     </div>
@@ -75,7 +75,7 @@
                             class="pos-value"
                             type="number"
                             v-for="(v, i) in pointer.camera.target"
-                            :disabled="!isEditing"
+                            :disabled="!isEditable"
                             v-model="mCamTarget[i]"
                         />
                     </div>
@@ -89,7 +89,7 @@
                         class="pos-value"
                         type="number"
                         v-for="(v, i) in pointer.position"
-                        :disabled="!isEditing"
+                        :disabled="!isEditable"
                         v-model="mPos[i]"
                     />
                 </div>
@@ -102,8 +102,10 @@
 
 export default {
     props: ["pointer"],
+    inject: ["redCarId"],
     data() {
         return {
+            editable: this.$route.params.id === this.redCarId,
             isEditing: false,
             // models
             mTitle: this.pointer.title,
@@ -113,8 +115,14 @@ export default {
             mPos: this.pointer.position,            
         }
     },
+    computed:{
+        isEditable(){
+            return this.editable && this.isEditing
+        }
+    },
     methods: {
         edit() {
+            if(!this.editable) return
             this.isEditing = true
         },
         cancelEdits() {

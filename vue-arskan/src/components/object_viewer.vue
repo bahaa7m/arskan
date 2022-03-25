@@ -1,6 +1,6 @@
 <template>
     <div class="viewer">
-        <iframe :src="url" frameborder="0"></iframe>
+        <iframe :src="url" frameborder="0" ></iframe>
     </div>
 </template>
 

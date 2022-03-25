@@ -14,13 +14,15 @@ export default {
         return {
             siloObjects: [],
             profile: {},
-            isLoading: true
+            isLoading: true,
+            redCarId: "62278c5ecd78795d5ce9b3de"
         }
     },
     provide() {
         return {
             siloObjects: this.siloObjects,
-            updateObject: this.updateObject
+            updateObject: this.updateObject,
+            redCarId: this.redCarId,
         }
     },
     created() {
@@ -41,7 +43,8 @@ export default {
                 .then(data => {
                     this.siloObjects.push(...data.data)
                     // this.isLoading = false
-                    this.fetchPointers()
+                    // this.fetchPointers()
+                    this.fetchProfiles()
                 })
                 .catch(function (error) {
                     console.log("error : ", error)
@@ -99,7 +102,7 @@ export default {
                         }
                         this.siloObjects[i]["embed"] = data.data
                         if (i == this.siloObjects.length - 1)
-                            this.isLoading = false
+                            this.fetchPointers()
                     })
                     .catch(function (error) {
                         console.log(error)

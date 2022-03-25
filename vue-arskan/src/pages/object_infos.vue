@@ -12,7 +12,7 @@ import PointerList from '../components/pointers_list.vue'
         <h5>{{ objectDescription }}</h5>
         <ObjectViewer :url="embedUrl" />
         <h2>Modification</h2>
-        <ModifForm :editable="id === red_car_id" :silo-object="siloObject"/>
+        <ModifForm :editable="isRedCar" :silo-object="siloObject"/>
         <h2>Pointeurs</h2>
         <PointerList :pointers="pointers"/>
     </div>
@@ -23,17 +23,13 @@ import PointerList from '../components/pointers_list.vue'
 
 export default {
     components: [ObjectViewer, ModifForm, PointerList],
-    inject: ["siloObjects"],
-    data() {
-        return {
-            red_car_id: "62278c5ecd78795d5ce9b3de"
-        }
-    },
+    inject: ["siloObjects", "redCarId"],
     computed: {
+        isRedCar(){
+            return this.id === this.redCarId
+        },  
         embedUrl() {
-            if (this.id === this.red_car_id)
-                return "https://viewer.arskan.com/objects/share/623b2a2eeb315945a0231026"
-            return "https://viewer.arskan.com/"
+            return "https://viewer.arskan.com" + this.siloObject.embed.url
         },
         siloObject() {
             return this.siloObjects.find(o => o._id === this.id)
