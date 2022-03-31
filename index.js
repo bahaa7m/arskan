@@ -182,13 +182,11 @@ app.put('/pointers/update/:id', (req,res) => {
 
 app.delete('/pointers/delete/:id', (req,res) => {
     console.log("DELETE POINTER")
-    console.log(req.body)
     console.log(req.params.id)
 
     axios
         .delete(
-            "https://public-api.arskan.com/pointers/" + req.params.id ,
-            req.body,  
+            "https://public-api.arskan.com/pointers/" + req.params.id,
             {
                 headers: { "Authorization": token },
             })
