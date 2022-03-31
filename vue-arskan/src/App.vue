@@ -23,6 +23,9 @@ export default {
             siloObjects: this.siloObjects,
             updateObject: this.updateObject,
             redCarId: this.redCarId,
+            updatePointer: this.updatePointer,
+            addPointer: this.addPointer,
+            deletePointer: this.deletePointer,
         }
     },
     created() {
@@ -161,7 +164,7 @@ export default {
                         o["pointers"] = data.data
                         if (i == n - 1) {
                             this.isLoading = false
-                            console.log("updated objects : ", this.siloObjects)
+                            // console.log("updated objects : ", this.siloObjects)
                         }
                     })
                     .catch(function (error) {

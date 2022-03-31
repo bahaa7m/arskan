@@ -10,7 +10,7 @@ import PointerList from '../components/pointers_list.vue'
         <router-link to="/" class="home-btn">RETOUR</router-link>
         <h3>{{ objectName }}</h3>
         <h5>{{ objectDescription }}</h5>
-        <ObjectViewer :url="embedUrl" />
+        <!-- <ObjectViewer :url="embedUrl" /> -->
         <h2>Modification</h2>
         <ModifForm :editable="isRedCar" :silo-object="siloObject"/>
         <h2>Pointeurs</h2>
@@ -20,7 +20,6 @@ import PointerList from '../components/pointers_list.vue'
 
 
 <script>
-
 export default {
     components: [ObjectViewer, ModifForm, PointerList],
     inject: ["siloObjects", "redCarId"],
@@ -38,7 +37,6 @@ export default {
             return this.siloObject.name
         },
         objectDescription() {
-            // console.log(this.siloObject)
             return this.siloObject.description
         },
         id() {
@@ -50,6 +48,7 @@ export default {
     }
 }
 </script>
+
 
 <style scoped>
 .info-page {

@@ -46,12 +46,19 @@
         </div>
 
         <form @submit.prevent>
-            <input class="title" placeholder="title" :disabled="!isEditable" v-model="mTitle" />
+            <input
+                class="title"
+                placeholder="title"
+                :disabled="!isEditable"
+                v-model="mTitle"
+                maxlength="25"
+            />
             <input
                 class="description"
                 placeholder="description"
                 :disabled="!isEditable"
                 v-model="mDescription"
+                maxlength="50"
             />
 
             <section>
@@ -62,7 +69,7 @@
                         <input
                             class="pos-value"
                             type="number"
-                            v-for="(v, i) in pointer.camera.position"
+                            v-for="(_, i) in mCamPos"
                             :disabled="!isEditable"
                             v-model="mCamPos[i]"
                         />
@@ -74,7 +81,7 @@
                         <input
                             class="pos-value"
                             type="number"
-                            v-for="(v, i) in pointer.camera.target"
+                            v-for="(_, i) in mCamTarget"
                             :disabled="!isEditable"
                             v-model="mCamTarget[i]"
                         />
@@ -83,12 +90,12 @@
             </section>
 
             <section>
-                <div class="title">Pointer position</div>
+                <div class="title">Position</div>
                 <div class="coordonnee">
                     <input
                         class="pos-value"
                         type="number"
-                        v-for="(v, i) in pointer.position"
+                        v-for="(_, i) in mPos"
                         :disabled="!isEditable"
                         v-model="mPos[i]"
                     />
@@ -98,49 +105,77 @@
     </div>
 </template>
 
-<script>
+<script>import { isCoreComponent } from "@vue/compiler-core"
+
 
 export default {
     props: ["pointer"],
-    inject: ["redCarId"],
+    inject: ["redCarId", "deletePointer", "updatePointer"],
     data() {
         return {
             editable: this.$route.params.id === this.redCarId,
             isEditing: false,
-            // models
+            // input models
             mTitle: this.pointer.title,
             mDescription: this.pointer.description,
             mCamPos: this.pointer.camera.position,
             mCamTarget: this.pointer.camera.target,
-            mPos: this.pointer.position,            
+            mPos: this.pointer.position,
+            initValues: { ...this.pointer },
         }
     },
-    computed:{
-        isEditable(){
+    computed: {
+        isEditable() {
             return this.editable && this.isEditing
         }
     },
+    created() {
+        console.log(this.initValues)
+        this.resetModels()
+    },
     methods: {
         edit() {
-            if(!this.editable) return
-            this.isEditing = true
+            this.isEditing = this.editable & true
         },
         cancelEdits() {
             this.isEditing = false
             this.resetModels()
         },
         confirmEdits() {
+            const inputs = document.getElementsByClassName("pos-value")
+            var isValid = true
+
+            for (const i of inputs) {
+                if (isNaN(i.valueAsNumber)) {
+                    i.classList.add("invalid")
+                    isValid = false
+                }
+                else if (i.classList.contains('invalid')) {
+                    i.classList.remove("invalid")
+                }
+            }
+            console.log(isValid)
+            if (!isValid) return false
+
+            this.updatePointer(this.pointer.id, {
+                title: this.mTitle,
+                description: this.mDescription,
+                camera: {
+                    position: this.mCamPos,
+                    target: this.mCamTarget,
+                },
+                position: this.mPos,
+            })
+
             this.isEditing = false
-            this.resetModels()
         },
         resetModels() {
-            console.log(this.pointer.camera.position)
             this.mTitle = this.pointer.title
             this.mDescription = this.pointer.description
             this.mCamPos = this.pointer.camera.position
             this.mCamTarget = this.pointer.camera.target
             this.mPos = this.pointer.position
-        }
+        },
     }
 }
 
@@ -159,11 +194,13 @@ export default {
 
 .title {
     font-size: 1.5rem;
+    max-width: 70%;
 }
 
 .description {
     font-size: 1.1rem;
     color: #e7e7e7;
+    margin-bottom: 15px;
 }
 
 section .title {
@@ -179,6 +216,13 @@ section .title {
 
 .coordonnee .pos-value {
     background: #58a858;
+    padding: 10px;
+    border-radius: 9px;
+    width: 55px;
+    height: 25px;
+}
+.coordonnee .pos-value.invalid {
+    background: #a85858;
     padding: 10px;
     border-radius: 9px;
     width: 55px;
@@ -228,14 +272,13 @@ select:focus {
     background: none;
     border: none;
     outline: none;
-
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
-input[type=number] {
-  -moz-appearance: textfield;
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 </style>
