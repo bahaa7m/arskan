@@ -238,6 +238,7 @@ export default {
                         throw new Error(data.error.message)
                     }
                     console.log(data)
+                    this.fetchPointers()
                 })
                 .catch(function (error) {
                     console.log(error)
