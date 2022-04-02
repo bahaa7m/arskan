@@ -1,5 +1,6 @@
 <script setup>
 import Pointer from './pointer_item.vue'
+import NewPointer from './pointeur_new.vue'
 </script>
 
 <template>
@@ -9,6 +10,9 @@ import Pointer from './pointer_item.vue'
         <div id="add-button" @click="createPointer">
             <p>New pointer</p>
         </div>
+        <Teleport to="#container">
+            <NewPointer v-if="showNewPointer"/>
+        </Teleport>
     </div>
 </template>
 
@@ -16,11 +20,24 @@ import Pointer from './pointer_item.vue'
 <script>
 
 export default {
-    components: [Pointer],
+    components: [Pointer, NewPointer],
     props: ["pointers"],
+    provide() {
+        return{
+            closeNewPointer: this.closeNewPointer
+        }
+    },
+    data(){
+        return {
+            showNewPointer: false
+        }
+    },
     methods:{
         createPointer(){
-            console.log("new pointer")
+            this.showNewPointer = true
+        },
+        closeNewPointer(){
+            this.showNewPointer = false
         }
     }
 }

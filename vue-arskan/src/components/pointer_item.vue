@@ -103,7 +103,7 @@
             </section>
         </form>
         <div class="footer">
-            <div id="delete-btn" @click="remove">
+            <div id="delete-btn" class="btn" @click="remove">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -158,7 +158,7 @@ export default {
             this.resetModels()
         },
         confirmEdits() {
-            const inputs = document.getElementsByClassName("pos-value")
+            const inputs = this.$el.getElementsByClassName("pos-value")
             var isValid = true
 
             for (const i of inputs) {
@@ -202,6 +202,8 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/pointer.css";
+
 .card {
     position: relative;
     width: 350px;
@@ -210,49 +212,6 @@ export default {
     margin: 30px;
     padding: 15px 30px;
     border-radius: 15px;
-}
-
-.title {
-    font-size: 1.5rem;
-    max-width: 70%;
-}
-
-.description {
-    font-size: 1.1rem;
-    color: #e7e7e7;
-    margin-bottom: 15px;
-}
-
-section .title {
-    font-size: 1.2rem;
-}
-
-.coordonnee {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    margin: 15px 0;
-}
-
-.coordonnee .pos-value {
-    background: #58a858;
-    padding: 10px;
-    border-radius: 9px;
-    width: 55px;
-    height: 25px;
-}
-.coordonnee .pos-value.invalid {
-    background: #a85858;
-    padding: 10px;
-    border-radius: 9px;
-    width: 55px;
-    height: 25px;
-}
-
-.label {
-    text-align: center;
-    font-size: 0.9rem;
-    color: #e7e7e7;
 }
 
 .mbutton {
@@ -285,23 +244,6 @@ section .title {
     background: #d77777aa;
 }
 
-input,
-input:focus,
-textarea:focus,
-select:focus {
-    background: none;
-    border: none;
-    outline: none;
-}
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-input[type="number"] {
-    -moz-appearance: textfield;
-}
-
 .footer {
     width: 100%;
     height: 30px;
@@ -314,20 +256,9 @@ input[type="number"] {
 
 #delete-btn {
     background: #7f5858;
-    padding: 0 15px;
-    box-sizing: border-box;
-    border-radius: 13px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
 }
 
 #delete-btn p{
     margin-left: 10px;
-}
-
-#delete-btn:hover {
-    cursor: pointer;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="viewer">
+    <div id="embedViewer" class="viewer">
         <iframe :src="url" frameborder="0" ></iframe>
     </div>
 </template>

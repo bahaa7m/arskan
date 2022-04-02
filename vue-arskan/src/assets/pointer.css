@@ -1,0 +1,59 @@
+input,
+input:focus,
+textarea:focus,
+select:focus {
+    background: none;
+    border: none;
+    outline: none;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.title {
+    font-size: 1.5rem;
+    max-width: 70%;
+}
+
+.description {
+    font-size: 1.1rem;
+    color: #e7e7e7;
+    margin-bottom: 15px;
+}
+
+section .title {
+    font-size: 1.2rem;
+}
+
+.coordonnee {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: 15px 0;
+}
+
+.coordonnee .pos-value {
+    background: #58a858;
+    padding: 10px;
+    border-radius: 9px;
+    width: 55px;
+    height: 25px;
+}
+.coordonnee .pos-value.invalid {
+    background: #a85858;
+    padding: 10px;
+    border-radius: 9px;
+    width: 55px;
+    height: 25px;
+}
+
+.label {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #e7e7e7;
+}

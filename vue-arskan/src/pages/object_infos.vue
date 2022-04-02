@@ -26,7 +26,7 @@ export default {
     computed: {
         isRedCar(){
             return this.id === this.redCarId
-        },  
+        },
         embedUrl() {
             return "https://viewer.arskan.com" + this.siloObject.embed.url
         },

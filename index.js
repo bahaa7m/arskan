@@ -124,7 +124,7 @@ app.post('/pointers/add/:id', (req,res) => {
             position: [x,y,z],
             target: [x,y,z],
         },
-        position: [x,y,z],
+        position: {x,y,z},
     }
     ************
     */
@@ -159,7 +159,7 @@ app.put('/pointers/update/:id', (req,res) => {
             position: [x,y,z],
             target: [x,y,z],
         },
-        position: [x,y,z],
+        position: {x,y,z},
     }
     ************
     */

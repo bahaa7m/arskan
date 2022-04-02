@@ -1,8 +1,10 @@
 <template>
-    <h1>ARSKAN</h1>
-    <router-view></router-view>
-    <div class="loader-container" v-if="isLoading">
-        <span class="loader"></span>
+    <div id="container">
+        <h1>ARSKAN</h1>
+        <router-view></router-view>
+        <div class="loader-container" v-if="isLoading">
+            <span class="loader"></span>
+        </div>
     </div>
 </template>
 
@@ -192,6 +194,7 @@ export default {
                         throw new Error(data.error.message)
                     }
                     console.log(data)
+                    this.fetchPointers()
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -250,6 +253,12 @@ export default {
 
 
 <style>
+body {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
 html {
     background: #282828;
     color: white;
@@ -258,6 +267,29 @@ html {
 h1 {
     font-size: 2.5em;
     text-align: center;
+}
+
+#container {
+    width: 100%;
+    height: 100vh;
+    overflow-y: scroll;
+    margin: 0;
+    padding: 0;
+}
+
+.btn {
+    background: #58b8aa;
+    padding: 0 15px;
+    box-sizing: border-box;
+    border-radius: 13px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn:hover {
+    cursor: pointer;
 }
 
 .loader-container {
