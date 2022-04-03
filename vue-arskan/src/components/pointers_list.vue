@@ -4,9 +4,11 @@ import NewPointer from './pointeur_new.vue'
 </script>
 
 <template>
-    <div class="list">
+    <div class="pointers">
         <p v-if="pointers.length == 0">No pointers available</p>
-        <Pointer v-for="(p, i) in pointers" :pointer="p" :key="i" />
+        <div class="list">
+            <Pointer v-for="(p, i) in pointers" :pointer="p" :key="i" />
+        </div>
         <div id="add-button" @click="createPointer">
             <p>New pointer</p>
         </div>
@@ -46,10 +48,18 @@ export default {
 
 
 <style scoped>
-.list {
+.pointers {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 15px 50px;
+}
+
+.list{
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
 }
 
 #add-button {
